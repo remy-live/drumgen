@@ -1,0 +1,219 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+@prefix midi:  <http://lv2plug.in/ns/ext/midi#> .
+@prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
+@prefix group: <http://lv2plug.in/ns/ext/port-groups#> .
+
+# --- GROUPES ---
+<http://moddevices.com/plugins/mod-devel/drumgen#group_perf>
+    a group:Group ;
+    lv2:name "Performance & Groove" ;
+    lv2:symbol "perf" .
+
+<http://moddevices.com/plugins/mod-devel/drumgen#group_mix>
+    a group:Group ;
+    lv2:name "Mixage Live (Mutes)" ;
+    lv2:symbol "mix" .
+
+<http://moddevices.com/plugins/mod-devel/drumgen#group_midi>
+    a group:Group ;
+    lv2:name "Mapping MIDI (Avancé)" ;
+    lv2:symbol "midi" .
+
+<http://moddevices.com/plugins/mod-devel/drumgen>
+    a lv2:Plugin , lv2:GeneratorPlugin ;
+    doap:name "DrumGen Ultimate" ;
+    doap:license <http://usefulinc.com/ns/doap#public-domain> ;
+    lv2:requiredFeature urid:map ;
+
+    lv2:port [
+        a atom:AtomPort, lv2:OutputPort ;
+        atom:bufferType atom:Sequence ;
+        atom:supports midi:MidiEvent ;
+        lv2:index 0 ;
+        lv2:symbol "midi_out" ;
+        lv2:name "MIDI Out" ;
+    ] ,
+    
+    # --- PERFORMANCE ---
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 1 ;
+        lv2:symbol "bpm" ;
+        lv2:name "BPM" ;
+        lv2:default 120.0 ;
+        lv2:minimum 40.0 ;
+        lv2:maximum 280.0 ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 2 ;
+        lv2:symbol "style" ;
+        lv2:name "Style" ;
+        lv2:default 4 ;
+        lv2:minimum 0 ;
+        lv2:maximum 23 ;
+        lv2:portProperty lv2:integer, lv2:enumeration ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+        lv2:scalePoint [ rdfs:label "Rock Classique"; rdf:value 0 ] ;
+        lv2:scalePoint [ rdfs:label "Hard Rock"; rdf:value 1 ] ;
+        lv2:scalePoint [ rdfs:label "Punk Rock"; rdf:value 2 ] ;
+        lv2:scalePoint [ rdfs:label "Funk JB"; rdf:value 3 ] ;
+        lv2:scalePoint [ rdfs:label "Disco"; rdf:value 4 ] ;
+        lv2:scalePoint [ rdfs:label "House 4x4"; rdf:value 5 ] ;
+        lv2:scalePoint [ rdfs:label "Deep House"; rdf:value 6 ] ;
+        lv2:scalePoint [ rdfs:label "Techno Detroit"; rdf:value 7 ] ;
+        lv2:scalePoint [ rdfs:label "Drum & Bass"; rdf:value 8 ] ;
+        lv2:scalePoint [ rdfs:label "Jungle"; rdf:value 9 ] ;
+        lv2:scalePoint [ rdfs:label "HipHop BoomBap"; rdf:value 10 ] ;
+        lv2:scalePoint [ rdfs:label "Trap"; rdf:value 11 ] ;
+        lv2:scalePoint [ rdfs:label "Reggae 1-Drop"; rdf:value 12 ] ;
+        lv2:scalePoint [ rdfs:label "Ska"; rdf:value 13 ] ;
+        lv2:scalePoint [ rdfs:label "Bossa Nova"; rdf:value 14 ] ;
+        lv2:scalePoint [ rdfs:label "Swing Jazz"; rdf:value 15 ] ;
+        lv2:scalePoint [ rdfs:label "Shuffle Blues"; rdf:value 16 ] ;
+        lv2:scalePoint [ rdfs:label "Metal Dbl-Kick"; rdf:value 17 ] ;
+        lv2:scalePoint [ rdfs:label "Breakcore"; rdf:value 18 ] ;
+        lv2:scalePoint [ rdfs:label "Afrobeat"; rdf:value 19 ] ;
+        lv2:scalePoint [ rdfs:label "TEST: Kick Only"; rdf:value 20 ] ;
+        lv2:scalePoint [ rdfs:label "TEST: Snare Only"; rdf:value 21 ] ;
+        lv2:scalePoint [ rdfs:label "TEST: Hats Only"; rdf:value 22 ] ;
+        lv2:scalePoint [ rdfs:label "TEST: Tom Roll"; rdf:value 23 ] ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 3 ;
+        lv2:symbol "density" ;
+        lv2:name "Densité" ;
+        lv2:default 6.0 ;
+        lv2:minimum 0.0 ;
+        lv2:maximum 10.0 ;
+        lv2:portProperty lv2:integer ; 
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 4 ;
+        lv2:symbol "measures" ;
+        lv2:name "Mesures" ;
+        lv2:default 4 ;
+        lv2:minimum 1 ;
+        lv2:maximum 8 ;
+        lv2:portProperty lv2:integer ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 5 ;
+        lv2:symbol "division" ;
+        lv2:name "Vitesse" ;
+        lv2:default 2 ;
+        lv2:minimum 1 ;
+        lv2:maximum 3 ;
+        lv2:portProperty lv2:integer, lv2:enumeration ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+        lv2:scalePoint [ rdfs:label "Rapide (1/16)"; rdf:value 1 ] ;
+        lv2:scalePoint [ rdfs:label "Normal (1/8)"; rdf:value 2 ] ;
+        lv2:scalePoint [ rdfs:label "Lent (1/4)"; rdf:value 3 ] ;
+    ] ,
+    
+    # --- MAPPING MIDI ---
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 6; lv2:symbol "note_kick"; lv2:name "Note: Kick"; lv2:default 36; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 7; lv2:symbol "note_snare"; lv2:name "Note: Snare"; lv2:default 38; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 8; lv2:symbol "note_hat"; lv2:name "Note: Hat Closed"; lv2:default 42; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 9; lv2:symbol "note_open"; lv2:name "Note: Hat Open"; lv2:default 46; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 10; lv2:symbol "note_clap"; lv2:name "Note: Clap"; lv2:default 39; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 11; lv2:symbol "note_tom_hi"; lv2:name "Note: Tom High"; lv2:default 45; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 12; lv2:symbol "note_tom_lo"; lv2:name "Note: Tom Low"; lv2:default 41; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 13; lv2:symbol "note_crash"; lv2:name "Note: Crash"; lv2:default 49; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 14; lv2:symbol "note_ride"; lv2:name "Note: Ride"; lv2:default 51; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+    [ a lv2:InputPort, lv2:ControlPort; lv2:index 15; lv2:symbol "note_rim"; lv2:name "Note: Rimshot"; lv2:default 37; lv2:minimum 0; lv2:maximum 127; lv2:portProperty lv2:integer; group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_midi>; ],
+
+    # --- PROGRESSION VISUELLE ---
+    [
+        a lv2:OutputPort , lv2:ControlPort ;
+        lv2:index 16 ;
+        lv2:symbol "progress" ;
+        lv2:name "Progression" ;
+        lv2:default 0.0 ;
+        lv2:minimum 0.0 ;
+        lv2:maximum 100.0 ;
+        units:unit units:pc ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+    ] ,
+
+    # --- NOUVEAUTÉS : HUMANIZE & SWING (PERF) ---
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 17 ;
+        lv2:symbol "humanize" ;
+        lv2:name "Humanize" ;
+        lv2:default 0.0 ;
+        lv2:minimum 0.0 ;
+        lv2:maximum 100.0 ;
+        units:unit units:pc ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 18 ;
+        lv2:symbol "swing" ;
+        lv2:name "Swing" ;
+        lv2:default 0.0 ;
+        lv2:minimum 0.0 ;
+        lv2:maximum 100.0 ;
+        units:unit units:pc ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_perf> ;
+    ] ,
+
+    # --- NOUVEAUTÉS : MUTES (MIXAGE LIVE) ---
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 19 ;
+        lv2:symbol "mute_kick" ;
+        lv2:name "Mute Kick" ;
+        lv2:default 0 ;
+        lv2:minimum 0 ;
+        lv2:maximum 1 ;
+        lv2:portProperty lv2:integer, lv2:toggled ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_mix> ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 20 ;
+        lv2:symbol "mute_snare" ;
+        lv2:name "Mute Snare" ;
+        lv2:default 0 ;
+        lv2:minimum 0 ;
+        lv2:maximum 1 ;
+        lv2:portProperty lv2:integer, lv2:toggled ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_mix> ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 21 ;
+        lv2:symbol "mute_hats" ;
+        lv2:name "Mute Hats" ;
+        lv2:default 0 ;
+        lv2:minimum 0 ;
+        lv2:maximum 1 ;
+        lv2:portProperty lv2:integer, lv2:toggled ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_mix> ;
+    ] ,
+    [
+        a lv2:InputPort , lv2:ControlPort ;
+        lv2:index 22 ;
+        lv2:symbol "mute_percs" ;
+        lv2:name "Mute Percs" ;
+        lv2:default 0 ;
+        lv2:minimum 0 ;
+        lv2:maximum 1 ;
+        lv2:portProperty lv2:integer, lv2:toggled ;
+        group:group <http://moddevices.com/plugins/mod-devel/drumgen#group_mix> ;
+    ] .
